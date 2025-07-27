@@ -1,9 +1,9 @@
 import joblib
 from flask import Flask,render_template,request
 import numpy as np
+import os
 
 app = Flask(__name__)
-
 MODEL_PATH = "artifacts/models/model.pkl"
 model = joblib.load(MODEL_PATH)
 
@@ -37,4 +37,5 @@ def index():
     return render_template("index.html" , prediction=prediction , features=FEATURES)
 
 if __name__=="__main__":
-    app.run(debug=True , port=5000 , host="0.0.0.0")
+    debug_mode = os.environ.get("FLASK_DEBUG", "False").lower() in ("true", "1", "yes")
+    app.run(debug=debug_mode, port=5000, host="0.0.0.0")
