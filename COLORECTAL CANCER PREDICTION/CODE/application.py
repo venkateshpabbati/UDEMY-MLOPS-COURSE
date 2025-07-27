@@ -5,6 +5,9 @@ import numpy as np
 
 app = Flask(__name__)
 
+import logging
+logging.basicConfig(level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
+
 model_path = "artifacts/models/model.pkl"
 scaler_path = "artifacts/processed/scaler.pkl"
 
@@ -33,7 +36,9 @@ def predict():
         return render_template('index.html' , prediction=prediction)
     
     except Exception as e:
-        return str(e)
+        import logging
+        logging.error(f"An error occurred: {str(e)}")
+        return "An internal error has occurred. Please try again later."
     
 if __name__=="__main__":
     app.run(debug=True , host="0.0.0.0" , port=5000)
