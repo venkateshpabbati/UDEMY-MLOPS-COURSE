@@ -88,7 +88,8 @@ def predict():
         return render_template('index.html' , prediction_text = f"The predictions is : {result}")
     
     except Exception as e:
-        return jsonify({'error' : str(e)})
+        logger.error("Exception in /predict: %s", str(e), exc_info=True)
+        return jsonify({'error': 'An internal error has occurred.'})
     
 @app.route('/metrics')
 def metrics():
